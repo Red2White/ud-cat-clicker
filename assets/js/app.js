@@ -1,80 +1,71 @@
 $(function(){
 
   var model = {
-    init: function(){
-      this.kittens = [
-        {name: 'Joy & Bee', image: 'kitten-1.jpg', click_qty: 0, style: 'dark'},
-        {name: 'Kity', image: 'kitten-3.jpg', click_qty: 0, style: 'light'},
-        {name: 'Mini', image: 'kitten-2.jpg', click_qty: 0, style: 'dark'},
-        {name: 'Ginger', image: 'kitten-4.jpg', click_qty: 0, style: 'light'},
-        {name: 'Eared', image: 'kitten-5.jpg', click_qty: 0, style: 'light'},
-      ];
-      this.changeCurrent(0);
-    },
-    
-    changeCurrent(id){
-      this.current = id;
-    },
-    
-    clickCurrent(){
-      this.getCurrent().click_qty ++ ;
-    },
-
-    getAll(){
-      return this.kittens;
-    },
-
-    getCurrent(){
-      return this.getAll()[this.current];
-    }
+    kittens: [
+      {name: 'Joy & Bee', image: 'kitten-1.jpg', clickQty: 0, frame: 'dark'},
+      {name: 'Kity', image: 'kitten-3.jpg', clickQty: 0, frame: 'light'},
+      {name: 'Mini', image: 'kitten-2.jpg', clickQty: 0, frame: 'dark'},
+      {name: 'Ginger', image: 'kitten-4.jpg', clickQty: 0, frame: 'light'},
+      {name: 'Eared', image: 'kitten-5.jpg', clickQty: 0, frame: 'light'},
+    ],
+    current: null,
   };
 
 
   var octopus = {
     init: function(){
-      model.init();
-      view.init();
-    },
-
-    changeCurrent(id){
-      model.changeCurrent(id);
-      view.render();
-    },
-
-    clickCurrent(){
-      model.clickCurrent();
-      view.render();
+      model.current = 0;
+      listView.init();
+      detailsView.init();
     },
 
     getAll(){
-      return model.getAll();
+      return model.kittens;
     },
 
     getCurrent(){
-      return model.getCurrent();
-    }
+      return this.getAll()[model.current];
+    },
+
+    changeCurrent(id){
+      model.current = id;
+      detailsView.render();
+    },
+
+    updateCounter(){
+      this.getCurrent().clickQty ++ ;
+      detailsView.render();
+    },
   };
 
 
-  var view = {
+  var listView = {
     init: function(){
-      let $list = $('#list');
-      this.$k_img = $('#k-img');
-      this.$k_name = $('#k-name');
-      this.$k_counter = $('#k-counter');
+      this.$list = $('#list');
+      this.render();
+    },
 
+    render: function(){
       for(let [id, kitty] of Object.entries(octopus.getAll())) {
-        $list.append(`<li id="kitty-${id}">${kitty.name}</li>`);
+        this.$list.append(`<li id="kitty-${id}">${kitty.name}</li>`);
 
         $(document).on('click', `#kitty-${id}`, () => {
           octopus.changeCurrent(id);
         });
       }
+    }
+  };
+
+
+  var detailsView = {
+    init: function(){
+      this.$k_img = $('#k-img');
+      this.$k_name = $('#k-name');
+      this.$k_counter = $('#k-counter');
 
       this.$k_img.on('click', () => {
-        octopus.clickCurrent();
+        octopus.updateCounter();
       });
-
       this.render();
     },
 
@@ -83,8 +74,8 @@ $(function(){
       this.$k_name.text(kitty.name);
       this.$k_img
         .attr('src', `./assets/img/${kitty.image}`)
-        .removeClass().addClass(kitty.style);
-      this.$k_counter.text(`Clicks: ${kitty.click_qty}`);
+        .removeClass().addClass(kitty.frame);
+      this.$k_counter.text(`Clicks: ${kitty.clickQty}`);
     }
   };
 
