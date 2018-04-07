@@ -1,15 +1,18 @@
 body {
 	background-color: #ccc;
 }
-#main_container {
+#main-container {
 	width: 800px;
 	margin: 20px auto;
 }
 #left {
 	width: 180px;
-	padding: 40px 20px 0 0;
+	height: 600px;
+	margin: 50px 20px 0 0;
 	text-align: right;
 	float: left;
+	border-right: #bbb 2px solid;
+	box-sizing: border-box;
 }
 #center {
 	width: 560px;
@@ -22,17 +25,29 @@ body {
 	list-style-type: none;
 	font: 20px / 30px bold Tahoma, Geneva, sans-serif;
 	cursor: pointer;
+	padding-right: 20px;
+}
+
+#list li.active {
+	border-right: orangered 3px solid;
+	color: maroon;
 }
 
 .kitten {
 	width: 100%;
 	margin: 14px 14px 20px;
 }
+.kitten h2 {
+	display: block;
+	width: 100%;
+	margin: 20px auto;
+	font: 24px / 36px bold Tahoma, Geneva, sans-serif;
+}
 .kitten span {
 	display: block;
 	width: 100%;
-	margin: 10px auto;
-	font: 24px / 36px Tahoma, Geneva, sans-serif;
+	margin: 20px auto;
+	font: 18px / 24px Tahoma, Geneva, sans-serif;
 }
 .kitten img.dark {
 	width: 100%;
@@ -43,4 +58,37 @@ body {
 	width: 100%;
 	border: 2px #000 solid;
 	outline: 10px #fff solid;
+}
+
+button {
+	display: inline-block;
+	width: 120px;
+	padding: 5px 10px;
+	border: 1px solid #fff;
+	color: #fff;
+}
+#btn-edit {
+	background-color: #666;
+}
+#btn-reset {
+	background-color: #bbb;
+}
+#btn-save {
+	background-color: orangered;
+}
+
+#form-edit {
+	display: none;
+}
+.form-row {
+	padding: 10px 20px;
+	text-align: right;
+}
+#form-edit input, #form-edit select {
+	width: 360px;
+}
+#form-edit label {
+	width: 180px;
+	padding-right: 40px;
+	text-align: right;
 }
